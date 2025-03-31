@@ -1,12 +1,13 @@
-FROM python:3.10
+FROM python:3.11
 
 WORKDIR /app
 
+COPY server-collect_data/app/ ./app
 COPY server-collect_data/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY shared/ ./shared/
+COPY .env .env
 
-COPY server-collect_data/app /app/app
-COPY shared /app/shared
+RUN pip install --no-cache-dir -r requirements.txt
 
 ENV PYTHONPATH=/app
 

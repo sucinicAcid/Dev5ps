@@ -1,5 +1,5 @@
 from shared.config import SYMBOLS, INTERVALS
-from fetcher.crud import save_to_db
+from app.fetcher.fetch_ohlcv import save_to_db
 
 def main():
     for symbol in SYMBOLS:
