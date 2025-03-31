@@ -1,0 +1,38 @@
+services:
+  collect_data:
+    build:
+      context: .
+      dockerfile: server-collector/Dockerfile
+    volumes:
+      - ./server-collector/app:/app/app
+      - ./shared:/app/shared
+      - ./.env:/app/.env
+    environment:
+      - PYTHONPATH=/app:/app/app
+      - TZ=Asia/Seoul
+    command: python app/fetcher/main_fetch.py
+    depends_on:
+      - db
+    restart: on-failure
+    networks:
+      - trading_net
+
+  db:
+    image: postgres:15
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: trading
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - trading_net
+
+volumes:
+  pgdata:
+
+networks:
+  trading_net:
