@@ -2,7 +2,7 @@ import os
 import sys
 
 # 내부 모듈 경로 등록
-sys.path.append(os.path.join(os.path.dirname(__file__), 'server-collector', 'app'))
+sys.path.append(os.path.join(os.path.dirname(__file__), 'server-collect_data', 'app'))
 sys.path.append(os.path.join(os.path.dirname(__file__), 'shared'))
 
 from config import SYMBOLS, INTERVALS

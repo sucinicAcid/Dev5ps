@@ -2,10 +2,10 @@ FROM python:3.10
 
 WORKDIR /app
 
-COPY server-collector/requirements.txt .
+COPY server-collect_data/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY server-collector/app /app/app
+COPY server-collect_data/app /app/app
 COPY shared /app/shared
 
 ENV PYTHONPATH=/app
