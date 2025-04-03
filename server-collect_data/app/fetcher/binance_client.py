@@ -6,7 +6,7 @@ from shared.db import engine
 
 BINANCE_BASE_URL = "https://api.binance.com/api/v3/klines?symbol={symbol}USDT&interval={interval}&limit={limit}&startTime={start_time}"
 
-def get_binance_start_time(symbol, interval, limit = 1, start_time = 0):
+def get_binance_start_time(symbol, interval, limit=1, start_time=0):
     url = BINANCE_BASE_URL.format(symbol=symbol, interval=interval.lower(), limit=limit, start_time=start_time)
     response = requests.get(url).json()
     if isinstance(response, list) and len(response) > 0:
@@ -15,10 +15,24 @@ def get_binance_start_time(symbol, interval, limit = 1, start_time = 0):
     raise ValueError(f"Binance에서 {symbol}_{interval}의 첫 거래 시간을 가져올 수 없습니다.")
 
 def get_latest_timestamp(symbol, interval):
-    table_name = f"{symbol}_{interval}"
-    query = f"SELECT MAX(timestamp) FROM \"{table_name}\";"
+    table_name = f"{symbol}_{interval}".lower()
+
+    # 테이블 존재 여부 확인
+    check_query = text("""
+        SELECT EXISTS (
+            SELECT FROM information_schema.tables 
+            WHERE table_name = :table_name
+        );
+    """)
+
     with engine.connect() as conn:
-        result = conn.execute(text(query)).scalar()
+        exists = conn.execute(check_query, {"table_name": table_name}).scalar()
+        if not exists:
+            return get_binance_start_time(symbol, interval)
+
+        query = text(f'SELECT MAX(timestamp) FROM "{table_name}";')
+        result = conn.execute(query).scalar()
+
     if result is None:
         return get_binance_start_time(symbol, interval)
     return result
@@ -41,5 +55,5 @@ def fetch_from_binance(symbol, interval, limit=1000, start_time=None):
             "volume": float(e[5])
         }
         for e in response
-        ]
+    ]
     return pd.DataFrame(data)

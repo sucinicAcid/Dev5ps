@@ -2,9 +2,9 @@ services:
   collect_data:
     build:
       context: .
-      dockerfile: server-collector/Dockerfile
+      dockerfile: server-collect_data/Dockerfile
     volumes:
-      - ./server-collector/app:/app/app
+      - ./server-collect_data/app:/app/app
       - ./shared:/app/shared
       - ./.env:/app/.env
     environment:
