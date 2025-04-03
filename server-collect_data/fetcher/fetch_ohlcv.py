@@ -1,10 +1,10 @@
 import pandas as pd
 import time
 from sqlalchemy import text
-from app.fetcher.binance_client import fetch_from_binance, get_latest_timestamp, get_binance_start_time
+from fetcher.binance_client import fetch_from_binance, get_latest_timestamp, get_binance_start_time
 from shared.db import engine
 from datetime import datetime, timezone, timedelta
-from app.indicators.calculate import calculate_indicators
+from indicators.calculate import calculate_indicators
 
 KST = timezone(timedelta(hours=9))
 
@@ -46,10 +46,10 @@ def create_dynamic_table(symbol: str, interval: str):
             volume_ma_20 REAL
         );
     """
-    with engine.begin() as conn:  # 반드시 트랜잭션 적용
+    with engine.begin() as conn:
         conn.execute(text(query))
         print(f"`{table_name}`이 생성되었습니다.")
-    time.sleep(1.0)  # PostgreSQL 메타데이터 동기화 대기
+    time.sleep(1.0)
 
 def save_to_db(symbol: str, interval: str):
     table_name = f"{symbol}_{interval}".lower()
@@ -110,7 +110,7 @@ def save_to_db(symbol: str, interval: str):
         except Exception as e:
             print(f"[경고] INSERT 실패 (시도 {attempt}/{MAX_RETRIES}): {e}")
             if "does not exist" in str(e):
-                print("🛠 테이블 재생성 및 재시도...")
+                print("테이블 재생성 및 재시도...")
                 create_dynamic_table(symbol, interval)
             else:
                 raise

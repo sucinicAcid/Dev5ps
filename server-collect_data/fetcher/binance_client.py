@@ -17,7 +17,6 @@ def get_binance_start_time(symbol, interval, limit=1, start_time=0):
 def get_latest_timestamp(symbol, interval):
     table_name = f"{symbol}_{interval}".lower()
 
-    # 테이블 존재 여부 확인
     check_query = text("""
         SELECT EXISTS (
             SELECT FROM information_schema.tables 
