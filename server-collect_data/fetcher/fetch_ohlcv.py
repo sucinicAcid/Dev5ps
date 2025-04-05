@@ -2,7 +2,7 @@ import pandas as pd
 import time
 from sqlalchemy import text
 from fetcher.binance_client import fetch_from_binance, get_latest_timestamp, get_binance_start_time
-from shared.db import engine
+from shared.connect_db import engine
 from datetime import datetime, timezone, timedelta
 from indicators.calculate import calculate_indicators
 

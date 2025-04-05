@@ -1,5 +1,5 @@
 import time
-from shared.config import SYMBOLS, INTERVALS
+from shared.symbols_intervals import SYMBOLS, INTERVALS
 from fetcher.fetch_ohlcv import save_to_db
 
 def main_loop(interval_seconds=60):

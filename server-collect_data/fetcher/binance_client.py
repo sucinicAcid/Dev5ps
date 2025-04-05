@@ -2,7 +2,7 @@ import requests
 import pandas as pd
 from datetime import datetime, timezone
 from sqlalchemy import text
-from shared.db import engine
+from shared.connect_db import engine
 
 BINANCE_BASE_URL = "https://api.binance.com/api/v3/klines?symbol={symbol}USDT&interval={interval}&limit={limit}&startTime={start_time}"
 
