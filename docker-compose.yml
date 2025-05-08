@@ -47,7 +47,7 @@ services:
       - PYTHONPATH=/app:/app/server-query
       - TZ=Asia/Seoul
     ports:
-      - "8000:8000"
+      - "8080:8080"
     depends_on:
       - db
     restart: always
@@ -66,7 +66,7 @@ services:
     environment:
       - TZ=Asia/Seoul
       - PYTHONPATH=/app:/app/server-frontend
-      - API_URL=http://query:8000
+      - API_URL=http://query:8080
     ports:
       - "8501:8501"
     depends_on:
