@@ -12,12 +12,13 @@ API_URL = os.getenv("API_URL", "http://localhost:8000")
 # UI
 st.set_page_config(page_title="캔들차트", layout="wide")
 st.title("암호화폐 실시간 차트")
-volume_threshold = st.number_input("최소 거래량", min_value=0.0, value=100000.0, step=10000.0)
+
 
 
 # UI ( 사용자 입력 )
 symbol = st.selectbox("암호화폐 선택", SYMBOLS)
 interval = st.selectbox("Timeframe 선택", INTERVALS, index=0)
+volume_threshold = st.number_input("최소 거래량", min_value=0.0, value=0.0, step=1000.0)
 
 # /ohlcv/{symbol}/{interval} 호출 함수 ( 호출 주기 60초로 제한 )
 @st.cache_data(ttl=60)
@@ -75,7 +76,7 @@ end_date = st.slider(
 )
 
 # 데이터 필터링: 종료 시점 이전 데이터 중 최근 length개를 표시할 예정이다
-df_filtered = df[df["timestamp"] <= pd.to_datetime(end_date) & df["volume"] >= volume_threshold]
+df_filtered = df[(df["timestamp"] <= pd.to_datetime(end_date)) & (df["volume"] >= volume_threshold)]
 df_filtered = df_filtered.iloc[-length:]
 
 # 캔들차트 출력
