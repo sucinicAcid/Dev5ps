@@ -114,7 +114,7 @@ apply_strategy_and_save(
     risk_reward_ratio=2.0,
 )
 
-# for문으로 할 때 O(N²) : 느림 ( filtered_modified.py로 더 빠르게 구현함 )
+# for문으로 할 때 O(N²) : 느림 ( choi_modified.py로 더 빠르게 구현함 )
 end_time = time.time()
 elapsed = end_time - start_time
 print(f"총 소요 시간: {elapsed:.2f}초")
