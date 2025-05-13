@@ -4,7 +4,7 @@ import re
 import requests
 import os
 
-API_URL = os.getenv("API_URL", "http://localhost:8080")
+API_URL = st.secrets.get("API_URL", "http://localhost:8080")
 
 st.set_page_config(page_title="차트 분석 플랫폼", layout="wide")
 st.title("Backtesting Page")
