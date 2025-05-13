@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from get_data import get_ohlcv
 from shared.symbols_intervals import SYMBOLS, INTERVALS
-from choi_modified import run_conditional_lateral_backtest, save_result_to_table
+from filtered_func import run_conditional_lateral_backtest, save_result_to_table
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse
 
