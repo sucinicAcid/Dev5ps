@@ -4,6 +4,7 @@ from get_data import get_ohlcv
 from shared.symbols_intervals import SYMBOLS, INTERVALS
 from choi_modified import run_conditional_lateral_backtest, save_result_to_table
 from pydantic import BaseModel
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
