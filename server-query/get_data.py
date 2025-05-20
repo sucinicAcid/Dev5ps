@@ -6,11 +6,14 @@ from fastapi.encoders import jsonable_encoder
 from shared.connect_db import engine
 from shared.symbols_intervals import SYMBOLS, INTERVALS
 
+
 # symbol_interval 테이블에서 OHLCV 데이터를 조회하고 반환
 def get_ohlcv(symbol: str, interval: str):
 
     if symbol not in SYMBOLS or interval not in INTERVALS:
-        return JSONResponse(content={"error": "테이블이 존재하지 않습니다."}, status_code=400)
+        return JSONResponse(
+            content={"error": "테이블이 존재하지 않습니다."}, status_code=400
+        )
 
     table_name = f"{symbol.lower()}_{interval}"
     query = text(f"SELECT * FROM {table_name} ORDER BY timestamp")
