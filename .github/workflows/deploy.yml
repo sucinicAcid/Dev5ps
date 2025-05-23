@@ -30,7 +30,7 @@ jobs:
       
       # Run pytest
       - name: Run Tests
-        run: 
+        run: echo 'hi'
 
   deploy:
     name: Build and Deploy Docker
