@@ -47,9 +47,15 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install - docker-compose
+
       - name: Build Docker Image
         run: |
-          docker build -t syhan655/dev5ps:latest .
+          docker-compose build syhan655/dev5ps:latest
+
       
       - name: Push Docker Image
         run: |
